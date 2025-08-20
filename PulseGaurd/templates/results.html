@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseGuard - Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .risk-card {
+            border-left-width: 5px;
+        }
+        .risk-low { border-left-color: #28a745; }
+        .risk-moderate { border-left-color: #ffc107; }
+        .risk-high { border-left-color: #fd7e14; }
+        .risk-emergency { border-left-color: #dc3545; }
+        .recommendation {
+            background-color: #e9ecef;
+            border-left: 4px solid #0d6efd;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 0 4px 4px 0;
+        }
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <h1>😷 PulseGuard Results</h1>
+            <p class="lead">Personalized Air Quality Assessment</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card risk-card risk-{{ risk_color }}">
+                    <div class="card-body">
+                        <h2 class="card-title">Current PM2.5 Level: {{ pm2_5 }} µg/m³</h2>
+                        <h3 class="card-subtitle mb-2">Health Risk: {{ risk_level }}</h3>
+                        <p class="card-text">{{ risk_message }}</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3>Personalized Recommendations</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if risk_level in ['High', 'Emergency'] %}
+                        <div class="recommendation">
+                            <strong>General Recommendations:</strong>
+                            <ul>
+                                <li>Consider wearing an N95 mask when outdoors</li>
+                                <li>Limit outdoor activities, especially strenuous exercise</li>
+                                <li>Keep windows closed if you're in a high-risk zone</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="recommendation">
+                            <strong>Environmental Conditions:</strong>
+                            <ul>
+                                <li>Temperature: {{ temperature }}°C</li>
+                                <li>Humidity: {{ humidity }}%</li>
+                                <li>PM10: {{ pm10 }} µg/m³</li>
+                                <li>CO2: {{ co2 }} PPM</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendation">
+                            <strong>Route Optimization:</strong>
+                            <p>Consider these lower-pollution routes:</p>
+                            <ul>
+                                <li>Use Gurugram Central Park as a green corridor between Cyber City and Sector 15</li>
+                                <li>Avoid NH-8 during rush hour (7-10 AM, 4-8 PM)</li>
+                                <li>Take routes with more tree cover where possible</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="/" class="btn btn-primary w-100 mt-3">Check Another Location</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h3>Gurugram Air Quality Map</h3>
+                    </div>
+                    <div class="card-body map-container">
+                        <!-- ArcGIS Embeddable Map Component -->
+                        <script type="module" src="https://js.arcgis.com/embeddable-components/4.33/arcgis-embeddable-components.esm.js"></script>
+                        <arcgis-embedded-map 
+                            style="height:500px;width:100%;" 
+                            item-id="a26b3adac9d3470aa6ef936e7488c3ae" 
+                            theme="light" 
+                            center="77.030975,28.432847"
+                            scale="144447.638572" 
+                            portal-url="https://iittnif-geointel.maps.arcgis.com">
+                        </arcgis-embedded-map>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h3>Understanding PM2.5 Levels</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div style="width: 20px; height: 20px; background-color: #28a745; border-radius: 4px; margin-right: 10px;"></div>
+                            <span><strong>Low (0-35 µg/m³)</strong>: Air quality is good</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div style="width: 20px; height: 20px; background-color: #ffc107; border-radius: 4px; margin-right: 10px;"></div>
+                            <span><strong>Moderate (35-75 µg/m³)</strong>: Acceptable for most</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div style="width: 20px; height: 20px; background-color: #fd7e14; border-radius: 4px; margin-right: 10px;"></div>
+                            <span><strong>High (75-115 µg/m³)</strong>: Health warnings for sensitive groups</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div style="width: 20px; height: 20px; background-color: #dc3545; border-radius: 4px; margin-right: 10px;"></div>
+                            <span><strong>Emergency (>115 µg/m³)</strong>: Health alert for everyone</span>
+                        </div>
+                        <p class="mt-3"><small><strong>Note:</strong> WHO recommended annual PM2.5 limit is 5 µg/m³</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
