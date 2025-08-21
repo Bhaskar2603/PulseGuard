@@ -5,7 +5,6 @@ Gurugram's severe air pollution (PM2.5 >180 µg/m³) causes 1.67 million annual 
 
 ## 🌟 Solution Overview
 PulseGuard integrates wearable biometric data with hyperlocal pollution mapping using XGBoost modeling (R² = 0.85) to deliver personalized health risk alerts. The system identifies high-risk zones through ArcGIS spatial analytics for Gurugram residents, empowering citizens to minimize exposure and reduce preventable hospitalizations.
-[![Open In Kaggle](https://www.kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/bhaskarjyothula/pulseguard)
 
 ## 📊 Key Features
 
@@ -53,7 +52,6 @@ PulseGuard integrates wearable biometric data with hyperlocal pollution mapping 
 | **XGBoost (Enhanced Features)** | **0.85** | **19.27** | n_estimators=200, max_depth=8, learning_rate=0.05 |
 
 ### **Feature Importance**
-![Feature Importance Chart](feature_importance.png)
 
 | **Feature** | **Importance** | **Insight** |
 |-------------|----------------|-------------|
@@ -63,8 +61,6 @@ PulseGuard integrates wearable biometric data with hyperlocal pollution mapping 
 | **is_rush_hour** | 1.99% | Traffic significantly impacts air quality (15-20% PM2.5 increase) |
 
 ## 🌍 Spatial Validation
-
-![Gurugram Heatmap](gurugram_heatmap.png)
 
 - **High-risk zones** (red) concentrated along NH-8 and Cyber City corridors
 - **Sector 15** consistently shows elevated levels (PM2.5 > 130 µg/m³)
